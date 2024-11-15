@@ -5,11 +5,8 @@ metadata:
 data:
   init.sql: |
     -- init.sql
-
-    -- Criar o usuário de replicação
     CREATE USER reptest WITH REPLICATION ENCRYPTED PASSWORD 'test';
 
-    -- Opcional: Criar um slot de replicação físico
     SELECT pg_create_physical_replication_slot('replication_slot');
 
     -- Criar as tabelas necessárias
