@@ -3,10 +3,11 @@ kind: ConfigMap
 metadata:
   name: postgres-replica-config
 data:
-  replica.sh: |
-    #!/bin/bash
-    set -e
-    if [ ! -s "$PGDATA/PG_VERSION" ]; then
-      pg_basebackup -h $POSTGRES_MASTER_SERVICE_HOST -D $PGDATA -U $POSTGRES_REPLICATION_USER -vP -W
-    fi
-    exec postgres
+  postgresql.conf: |
+    wal_level = replica
+    hot_standby = on
+    max_wal_senders = 10
+    max_replication_slots = 10
+    hot_standby_feedback=on
+  pg_hba.conf: |
+    host replication reptest
