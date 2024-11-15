@@ -6,7 +6,7 @@ metadata:
     app: postgres
     role: master
 spec:
-  serviceName: "postgres-master"
+  serviceName: "postgres-master-service"
   replicas: 1
   selector:
     matchLabels:
