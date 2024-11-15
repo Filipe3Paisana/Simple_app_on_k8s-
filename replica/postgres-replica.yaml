@@ -26,7 +26,7 @@ spec:
             - containerPort: 5432
           envFrom:
             - configMapRef:
-                name: postgres-secret
+                name: postgres-replica-config
             - secretRef:
                 name: postgres-replica-secret 
           volumeMounts:
