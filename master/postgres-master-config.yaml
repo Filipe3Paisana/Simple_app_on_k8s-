@@ -8,4 +8,4 @@ data:
     max_wal_senders = 10
     max_replication_slots = 10
   pg_hba.conf: |
-    host replication replicator 0.0.0.0/0 md5
+    host replication reptest 0.0.0.0/0 md5
