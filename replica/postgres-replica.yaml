@@ -27,13 +27,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres-secret
-          env:
-            - name: POSTGRES_REPLICATION_USER
-              value: reptest
-            - name: POSTGRES_REPLICATION_PASSWORD
-              value: test
-            - name: POSTGRES_MASTER_SERVICE_HOST
-              value: postgres-master  
+            - secretRef:
+                name: postgres-replica-secret 
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-replica-data

@@ -26,12 +26,9 @@ spec:
             - containerPort: 5432
           envFrom:
             - configMapRef:
-                name: postgres-secret
-          env:
-            - name: POSTGRES_REPLICATION_USER
-              value: reptest
-            - name: POSTGRES_REPLICATION_PASSWORD
-              value: test
+                name: postgres-master-config
+            - secretRef:
+                name: postgres-master-secret
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-master-data
