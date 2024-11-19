@@ -1,6 +1,0 @@
-wal_level = replica
-max_wal_senders = 2
-max_replication_slots = 2
-synchronous_commit = off
-
-host    replication     repuser         0.0.0.0/0       scram-sha-256
