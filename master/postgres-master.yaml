@@ -18,35 +18,24 @@ spec:
         app: postgres
         role: master
     spec:
-      terminationGracePeriodSeconds: 30
-      initContainers:
-      - name: init
-        image: postgres:14
-        command: [ "bash", "-c" ]
-        args:
-        - |
-          mkdir -p /var/lib/postgresql/data && chown -R 999:999 /var/lib/postgresql/data
-        volumeMounts:
-        - name: postgres-master-data
-          mountPath: /var/lib/postgresql/data
+
       containers:
         - name: postgres
           image: 'postgres:14'
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
-          env:
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+
           envFrom:
             - secretRef:
                 name: postgres-master-secret
-          args: ["-c", "config_file=/etc/postgresql/conf.d/postgresql.conf"]
+          
           volumeMounts:
             - name: postgres-master-data
               mountPath: /var/lib/postgresql/data
-            - name: postgres-master-config
-              mountPath: /etc/postgresql/conf.d
+            # - name: postgres-master-config
+            #   mountPath: /etc/postgresql
+              subPath: postgresql.conf
             - name: postgres-init-sql
               mountPath: /docker-entrypoint-initdb.d/init.sql
               subPath: init.sql
