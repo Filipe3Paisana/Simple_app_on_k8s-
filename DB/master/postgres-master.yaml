@@ -18,27 +18,23 @@ spec:
         app: postgres
         role: master
     spec:
-
       containers:
         - name: postgres
           image: 'postgres:14'
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
-
           envFrom:
+            - configMapRef:
+                name: postgres-master-config
             - secretRef:
                 name: postgres-master-secret
-          
           volumeMounts:
-            - name: postgres-master-data
-              mountPath: /var/lib/postgresql/data
-            # - name: postgres-master-config
-            #   mountPath: /etc/postgresql
-              subPath: postgresql.conf
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-master-data
             - name: postgres-init-sql
               mountPath: /docker-entrypoint-initdb.d/init.sql
-              subPath: init.sql
+              subPath: init.sql 
       volumes:
         - name: postgres-master-data
           persistentVolumeClaim:
@@ -49,6 +45,3 @@ spec:
             items:
               - key: init.sql
                 path: init.sql
-        - name: postgres-master-config
-          configMap:
-            name: postgres-master-config
